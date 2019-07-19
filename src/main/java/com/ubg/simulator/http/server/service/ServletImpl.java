@@ -5,6 +5,7 @@ import com.ubg.simulator.http.server.beans.HTTPRequestBean;
 import com.ubg.simulator.http.server.beans.HTTPServerDefine;
 import com.ubg.simulator.utils.UIOUtils;
 import lombok.extern.slf4j.Slf4j;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,10 @@ import java.util.Map;
  * */
 @Slf4j
 public class ServletImpl implements Servlet {
+    private static final String RESPONSE_TYPE_JSON = "JSON";
+    private static final String RESPONSE_TYPE_XML = "XML";
+    private static final String REQUEST_QUESTION_MARK = "?";
+
     private ServletConfig servletConfig;
     private HTTPServerDefine httpserver;
     private String responseContext;
@@ -48,10 +53,10 @@ public class ServletImpl implements Servlet {
         requestBean.setRemoteHost(request.getRemoteHost());
         requestBean.setRemoteIP(request.getRemoteAddr());
         //设置XML的响应格式
-        if (httpserver.getReturnType().toUpperCase().equals("xml")) {
+        if (ServletImpl.RESPONSE_TYPE_XML.equals(httpserver.getReturnType().toUpperCase())) {
             response.setContentType("application/xml;charset=utf-8");
         }//设置JSON的响应格式
-        else if (httpserver.getReturnType().toUpperCase().equals("json")) {
+        else if (ServletImpl.RESPONSE_TYPE_JSON.equals(httpserver.getReturnType().toUpperCase())) {
             response.setContentType("application/json;charset=utf-8");
         } else {
             //设置其它的响应格式都以HTML形式
@@ -60,7 +65,7 @@ public class ServletImpl implements Servlet {
         if (requestBean.getMethod().toUpperCase().equals(httpserver.getMethod().toUpperCase())) {
             //如果设定读报文头
             if (httpserver.isReadHeader()) {
-                HashMap<String, String> headerMap = new HashMap<>();
+                HashMap<String, String> headerMap = new HashMap<>(16);
                 Enumeration<String> headers = request.getHeaderNames();
                 while (headers.hasMoreElements()) {
                     String key = headers.nextElement();
@@ -71,10 +76,10 @@ public class ServletImpl implements Servlet {
             //如果设定读报文参数
             if (httpserver.isReadParameter()) {
                 Map<String, String[]> parameterMap = request.getParameterMap();
-                if (requestBean.getUrl().indexOf("?") > 0) {
-                    String paramters[] = requestBean.getUrl().substring(requestBean.getUrl().indexOf("?")).split("&");
+                if (requestBean.getUrl().indexOf(ServletImpl.REQUEST_QUESTION_MARK) > 0) {
+                    String[] paramters = requestBean.getUrl().substring(requestBean.getUrl().indexOf("?")).split("&");
                     for (String str : paramters) {
-                        String parameter[] = str.split("=");
+                        String[] parameter = str.split("=");
                         String[] values = new String[1];
                         values[0] = parameter[1];
                         parameterMap.put(parameter[0], values);
@@ -134,9 +139,9 @@ public class ServletImpl implements Servlet {
      * */
     private String returnNullFileErrorMessage(String filePath) {
         String returnMessage = "";
-        if (httpserver.getReturnType().toUpperCase().equals("xml")) {
+        if (ServletImpl.RESPONSE_TYPE_XML.equals(httpserver.getReturnType().toUpperCase())) {
             returnMessage = "<error>响应文件不存在，请检查配置：" + filePath + "</error>";
-        } else if (httpserver.getReturnType().toUpperCase().equals("json")) {
+        } else if (ServletImpl.RESPONSE_TYPE_JSON.equals(httpserver.getReturnType().toUpperCase())) {
 
             returnMessage = "{\"error\",\"响应文件不存在，请检查配置：" + filePath + "\"}";
         } else {
@@ -150,10 +155,9 @@ public class ServletImpl implements Servlet {
      * */
     private String returnErrorMessage(String errorMethod) {
         String returnMessage = "";
-        if (httpserver.getReturnType().toUpperCase().equals("xml")) {
+        if (ServletImpl.RESPONSE_TYPE_XML.equals(httpserver.getReturnType().toUpperCase())) {
             returnMessage = "<error>请求方法错误，不支持方法：" + errorMethod + "</error>";
-        } else if (httpserver.getReturnType().toUpperCase().equals("json")) {
-
+        } else if (ServletImpl.RESPONSE_TYPE_JSON.equals(httpserver.getReturnType().toUpperCase())) {
             returnMessage = "{\"error\",\"请求方法错误，不支持方法：" + errorMethod + "\"}";
         } else {
             returnMessage = "请求方法错误，不支持方法：" + errorMethod;

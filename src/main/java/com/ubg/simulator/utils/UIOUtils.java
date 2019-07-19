@@ -2,7 +2,9 @@ package com.ubg.simulator.utils;
 import java.io.InputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-
+/**
+ * @author bruce
+ * */
 @Slf4j
 public class UIOUtils {
     /**
