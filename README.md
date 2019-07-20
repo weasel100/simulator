@@ -14,6 +14,6 @@
              isReadStream: true,      是否读请求流 -默认为false
              encoding: "UTF-8",       通讯字符集  -默认为UTF-8
              reload: true,            是否每次请求都刷新响应报文  -默认为false
-             returnType: "json",      响应报文格式：json,html,xml,-默认为json,主要约定错误响应报文，正确响应取决于设定的响应报文内容
+             returnType: "json",      响应报文格式：json,html,xml,-默认为json,仅约定错误响应报文格式
              delay: 1000}             通讯延迟响应时间，单位：毫秒（ms）-默认为0
           - {url: "/bbb",method: "get", response: "get.json",returnType: "html",reload: false}
