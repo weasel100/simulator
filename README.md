@@ -7,7 +7,7 @@
         port: 8080                    定义WEB服务端口，它会覆盖springboot的默认端口
         serverList:                   定义接口组，子接口为“-”开头，后面跟JSON定义，注意空格
           - {url: "/test",            url  - 必输
-             method: "post",          限定请求方法 - 必输
+             method: "post",          限定请求方法 - 必输,"*"所有方法都支持
              response: "post.json",   约定响应报文文件，- 必输 以resources/response为根目录，可以在此目录下定义子目录
              isReadHeader: true,      是否读请求报文头  -默认为false
              isReadParameter: true,   是否读请求参数列表    -默认为false
