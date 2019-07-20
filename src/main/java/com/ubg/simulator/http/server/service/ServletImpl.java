@@ -23,6 +23,9 @@ public class ServletImpl implements Servlet {
     private static final String RESPONSE_TYPE_JSON = "JSON";
     private static final String RESPONSE_TYPE_XML = "XML";
     private static final String REQUEST_QUESTION_MARK = "?";
+    private static final String REQUEST_QUESTION_AND= "&";
+    private static final String REQUEST_QUESTION_EQUAL= "=";
+    private static final String REQUEST_All_PROMISE = "*";
 
     private ServletConfig servletConfig;
     private HTTPServerDefine httpserver;
@@ -62,7 +65,8 @@ public class ServletImpl implements Servlet {
             //设置其它的响应格式都以HTML形式
             response.setContentType("text/html;charset=utf-8");
         }
-        if (requestBean.getMethod().toUpperCase().equals(httpserver.getMethod().toUpperCase())) {
+        //通配置方法及匹配的协议可处理
+        if (REQUEST_All_PROMISE.equals(httpserver.getMethod()) || requestBean.getMethod().toUpperCase().equals(httpserver.getMethod().toUpperCase())) {
             //如果设定读报文头
             if (httpserver.isReadHeader()) {
                 HashMap<String, String> headerMap = new HashMap<>(16);
@@ -77,9 +81,9 @@ public class ServletImpl implements Servlet {
             if (httpserver.isReadParameter()) {
                 Map<String, String[]> parameterMap = request.getParameterMap();
                 if (requestBean.getUrl().indexOf(ServletImpl.REQUEST_QUESTION_MARK) > 0) {
-                    String[] paramters = requestBean.getUrl().substring(requestBean.getUrl().indexOf("?")).split("&");
+                    String[] paramters = requestBean.getUrl().substring(requestBean.getUrl().indexOf(REQUEST_QUESTION_MARK)).split(REQUEST_QUESTION_AND);
                     for (String str : paramters) {
-                        String[] parameter = str.split("=");
+                        String[] parameter = str.split(REQUEST_QUESTION_EQUAL);
                         String[] values = new String[1];
                         values[0] = parameter[1];
                         parameterMap.put(parameter[0], values);

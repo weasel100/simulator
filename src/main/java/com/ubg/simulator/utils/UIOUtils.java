@@ -18,10 +18,10 @@ public class UIOUtils {
      * 读类路径文件转字符串
      */
     public static String readFile(String classpathFile, String encoding) {
-        String result = "";
-        ClassLoader classLoader = UIOUtils.class.getClassLoader();
+        String result = null;
         try {
             log.info(classpathFile);
+            ClassLoader classLoader = UIOUtils.class.getClassLoader();
             result = IOUtils.toString(classLoader.getResourceAsStream("response/" + classpathFile), encoding);
         } catch (Exception e) {
             log.error(e.getMessage());
