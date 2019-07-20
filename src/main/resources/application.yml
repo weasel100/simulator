@@ -2,18 +2,5 @@ ubg:
   httpsimulator:
     port: 8080
     serverList:
-      - {url: "/test",
-         method: "post",
-         response: "post.json",
-         isReadHeader: true,
-         isReadParameter: true,
-         isReadStream: true,
-         encoding: "UTF-8",
-         reload: false,
-         returnType: "json",
-         delay: 10}
-      - {url: "/aaa",
-         method: "get",
-         response: "get.json",
-         returnType: "html",
-         reload: false}
+      - {url: "/test", method: "*",response: "post.json",isReadHeader: true,isReadParameter: true,isReadStream: true,encoding: "UTF-8",reload: false,returnType: "json",delay: 10}
+      - {url: "/aaa", method: "get",response: "get.json",returnType: "html",reload: false}

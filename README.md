@@ -16,8 +16,4 @@
              reload: true,            是否每次请求都刷新响应报文  -默认为false
              returnType: "json",      响应报文格式：json,html,xml,-默认为json,主要约定错误响应报文，正确响应取决于设定的响应报文内容
              delay: 1000}             通讯延迟响应时间，单位：毫秒（ms）-默认为0
-          - {url: "/bbb",
-             method: "get",
-             response: "get.json",
-             returnType: "html",
-             reload: false}
+          - {url: "/bbb",method: "get", response: "get.json",returnType: "html",reload: false}
