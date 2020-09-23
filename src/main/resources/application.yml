@@ -4,3 +4,7 @@ ubg:
     serverList:
       - {url: "/test", method: "*",response: "post.json",isReadHeader: true,isReadParameter: true,isReadStream: true,encoding: "UTF-8",reload: false,returnType: "json",delay: 10}
       - {url: "/aaa", method: "get",response: "get.json",returnType: "html",reload: false}
+      - {url: "/stockAll", method: "post",response: "stockAll.json",isReadHeader: true,isReadParameter: true,isReadStream: true,encoding: "UTF-8",reload: false,returnType: "json",delay: 10}
+      - {url: "/stockMain", method: "post",response: "stockMain.json",isReadHeader: true,isReadParameter: true,isReadStream: true,encoding: "UTF-8",reload: false,returnType: "json",delay: 10}
+      - {url: "/stockGem", method: "post",response: "stockGem.json",isReadHeader: true,isReadParameter: true,isReadStream: true,encoding: "UTF-8",reload: false,returnType: "json",delay: 10}
+      - {url: "/stockSti", method: "post",response: "stockSti.json",isReadHeader: true,isReadParameter: true,isReadStream: true,encoding: "UTF-8",reload: false,returnType: "json",delay: 10}
